@@ -17,10 +17,22 @@
   * `sudo vi /etc/wpa_supplicant/wpa_supplicant.conf` : on change les paramètres de connexion au wifi
   * `sudo vi /etc/network/interfaces` : on change les paramètres d'adressage IP
   * `sudo vi /etc/apt/apt.conf` : On modifie -ou supprime- les paramètres du proxy
+  * `sudo vi /etc/environment`: idem on modifie -ou supprime- les paramètre du proxy
 * Faire les mises à jour :
   * `sudo apt-get update`
   * `sudo apt-get upgrade`
 
 ## Installation de pharo sur la Raspberry
 
-* En cours ... 
+### Repository Git à utiliser : 
+- [TelePharo ](https://github.com/pharo-ide/TelePharo)
+- [PharoThings ](https://github.com/pharo-iot/PharoThings)
+
+### Etape d'installation
+
+1. [Téléchargement de pharo ici ]( http://files.pharo.org/vm/pharo-spur32/linux/armv6/latest.zip )
+2. Ajout d'une image pharo 6.1 stable 32 bits que l'on prépare avec pharo-laucher
+3. on suit les étapes sur la vidéo youtube [Vidéo d'installation pharo + télépharo sur Raspberry](https://www.youtube.com/watch?v=Yys1M0hZIWY) pour préparer l'image pharo en mode serveur.
+4. On lance l'image avec la commande : `/opt/pharo/pharo /opt/pharo-vm/CoupeDeFranceRobotiqueRaspberry/ remotePharo --startServerOnPort=40423 --disableSlowPlugins`
+5. On fait une nouvelle image pharo avec le laucher __avec la même version !__
+6. On suit toujours les étapes de la [Vidéo ](https://www.youtube.com/watch?v=Yys1M0hZIWY)
