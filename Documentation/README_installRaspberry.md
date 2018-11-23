@@ -16,15 +16,19 @@
 * Il faut changer les paramètres de connexion de la Raspberry :
   * `sudo vi /etc/wpa_supplicant/wpa_supplicant.conf` : on change les paramètres de connexion au wifi
   * `sudo vi /etc/network/interfaces` : on change les paramètres d'adressage IP
+    * mettre en commentaire toutes les lignes lié à configuration static de la carte wifi
+    * `iface wlan0 inet dhcp` : ligne a mettre pour la configuration wifi dynamique
   * `sudo vi /etc/apt/apt.conf` : On modifie -ou supprime- les paramètres du proxy
+    * On met en commentaire les deux lignes du proxy si on sur un réseau sans proxy
   * `sudo vi /etc/environment`: idem on modifie -ou supprime- les paramètre du proxy
+    * On met en commentaire les deux lignes du proxy si on sur un réseau sans proxy
 * Faire les mises à jour :
   * `sudo apt-get update`
   * `sudo apt-get upgrade`
 
 ## Installation de pharo sur la Raspberry
 
-### Repository Git à utiliser : 
+### Repository Git à utiliser :
 - [TelePharo ](https://github.com/pharo-ide/TelePharo)
 - [PharoThings ](https://github.com/pharo-iot/PharoThings)
 
