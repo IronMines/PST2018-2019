@@ -37,6 +37,14 @@
 1. [Téléchargement de pharo ici ]( http://files.pharo.org/vm/pharo-spur32/linux/armv6/latest.zip )
 2. Ajout d'une image pharo 6.1 stable 32 bits que l'on prépare avec pharo-laucher
 3. on suit les étapes sur la vidéo youtube [Vidéo d'installation pharo + télépharo sur Raspberry](https://www.youtube.com/watch?v=Yys1M0hZIWY) pour préparer l'image pharo en mode serveur.
-4. On lance l'image avec la commande : `/opt/pharo/pharo /opt/pharo-vm/CoupeDeFranceRobotiqueRaspberry/ remotePharo --startServerOnPort=40423 --disableSlowPlugins`
+4. On lance l'image avec la commande : `/opt/pharo/pharo --headless /opt/pharo-vm/CoupeDeFranceRobotiqueRaspberry/ remotePharo --startServerOnPort=40423 --disableSlowPlugins`
 5. On fait une nouvelle image pharo avec le laucher __avec la même version !__
 6. On suit toujours les étapes de la [Vidéo ](https://www.youtube.com/watch?v=Yys1M0hZIWY)
+7. Bug avec wiring Pi : (http://wiringpi.com/download-and-install/)
+  * attention au droit linux pour téléchargé le répository
+
+
+### actuellement
+
+- installation de l'image et de la vm
+- il manque la librairie c !
