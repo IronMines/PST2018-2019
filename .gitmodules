@@ -1,3 +1,6 @@
 [submodule "codeArduino/PDR2018"]
 	path = codeArduino/PDR2018
 	url = https://github.com/IronMines/PDR2018.git
+[submodule "codePharo/pharoRobot"]
+	path = codePharo/pharoRobot
+	url = https://github.com/SebastienPacqueteau/pharoRobot.git
