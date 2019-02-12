@@ -4,10 +4,10 @@
  *  Created on: 11 févr. 2019
  *      Author: Sébastien
  */
-#import "arduino.h"
+
 #ifndef ULTRASONS_H_
 #define ULTRASONS_H_
-
+#import "arduino.h"
 
 class Ultrasons {
 public:

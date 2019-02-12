@@ -4,10 +4,10 @@
  *  Created on: 11 févr. 2019
  *      Author: Sébastien
  */
-#import "arduino.h"
+
 #ifndef INFRAROUGE_H_
 #define INFRAROUGE_H_
-
+#import "arduino.h"
 
 class Infrarouge {
 public:

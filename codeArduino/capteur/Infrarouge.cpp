@@ -11,7 +11,7 @@ Infrarouge::Infrarouge(int _pin)
 : pin(_pin), distance(0)
 {
 	// TODO Auto-generated constructor stub
-
+	pinMode(this->pin, INPUT);
 }
 
 Infrarouge::~Infrarouge() {
