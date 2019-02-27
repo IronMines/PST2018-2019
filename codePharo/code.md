@@ -83,13 +83,40 @@ Envoyer un caractère via i2c
 ```smalltalk
 board := RpiBoard3B current.
 i2cConnection := board connectToI2CDevice: 16r12.
-1 to: 10 do: [ :i |
-		i2cConnection writeData: 65+i.
-		(Delay forMilliseconds: 100 )wait. ].
-i2cConnection writeData: 65.
 
-test := 'blabla'.
+test := test := 'MVTN', ';' ,10 asString.
 test2 := test asByteArray.
 i2cConnection writeData: test2 size.
 test2 do: [ :each | i2cConnection writeData: each ].
+```
+
+
+Pour la lecture tester :
+```
+read8BitsArray: blockSize startingAt: reg
+
+board := RpiBoard3B current.
+i2cConnection := board connectToI2CDevice: 16r12.
+i2cCapteur := board connectToI2CDevice: 16r8.
+test := i2cCapteur read8BitsAt:200.
+
+
+test2 := test asByteArray.
+test2
+```
+
+
+Récupérer les données des capteurs :
+```
+board := RpiBoard3B current.
+i2cCapteur := board connectToI2CDevice: 16r8.
+envoi := 'UAvDr' asByteArray.
+"envoi := 'UAvGa' asByteArray."
+i2cCapteur writeData: envoi size.
+envoi do: [ :each | i2cCapteur writeData: each] .
+test := i2cCapteur read8BitsAt:1.
+test asByteArray.
+test2 := i2cCapteur read16BitsAt:1.
+test2 asByteArray.
+res := (test asByteArray at:1) + (test asByteArray at:2) + 1.
 ```

@@ -1,27 +1,27 @@
 /*
- * Ultrasons.cpp
- * Ultrasonic Sensor HC-SR04
- *  Created on: 11 févr. 2019
+ * Ultrason.cpp
+ *
+ *  Created on: 20 févr. 2019
  *      Author: Sébastien
  */
 
-#include "Ultrasons.h"
+#include "Ultrason.h"
 
 
-Ultrasons::Ultrasons(int _trigPin, int _echoPin)
-: trigPin(_trigPin), echoPin(_echoPin), duration(0), distance(0)
-{
+Ultrason::Ultrason(int _trigPin, int _echoPin)
+: trigPin(_trigPin), echoPin(_echoPin), distance(0){
+	// TODO Auto-generated constructor stub
 	pinMode(this->trigPin, OUTPUT); // Sets the trigPin as an Output
 	pinMode(this->echoPin, INPUT); // Sets the echoPin as an Input
-	Serial.begin(9600); // Starts the serial communication
 
 }
 
-Ultrasons::~Ultrasons() {
+Ultrason::~Ultrason() {
 	// TODO Auto-generated destructor stub
 }
 
-void Ultrasons::calculDistance(){
+void Ultrason::calculDistance(){
+	unsigned long duration;
 	// Clears the trigPin
 	digitalWrite(this->trigPin, LOW);
 	delayMicroseconds(2);
@@ -30,14 +30,19 @@ void Ultrasons::calculDistance(){
 	delayMicroseconds(10);
 	digitalWrite(this->trigPin, LOW);
 	// Reads the echoPin, returns the sound wave travel time in microseconds
-	this->duration = pulseIn(this->echoPin, HIGH);
+	duration = pulseIn(this->echoPin, HIGH);
 	// Calculating the distance
-	this->distance= this->duration*0.034/2;
-	// Prints the distance on the Serial Monitor
-	Serial.print("Distance: ");
-	Serial.println(distance);
+	this->distance= 10*duration*0.034/2;
 }
 
-int Ultrasons::getDistance(){
+int Ultrason::getDistance(){
 	return this->distance;
 }
+
+String Ultrason::getDistanceToString(){
+	char buffer[5];
+	sprintf(buffer, "%d", this->getDistance());
+	return buffer;
+}
+
+

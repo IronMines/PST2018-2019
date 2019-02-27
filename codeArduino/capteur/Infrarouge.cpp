@@ -21,9 +21,15 @@ Infrarouge::~Infrarouge() {
 void Infrarouge::calculDistance(){
 	  int val = analogRead(this->pin);       // reads the value of the sharp sensor
 	  this->distance = pow(3027.4/val, 1.2134)*10; //convert readings to distance(mm)
-	  Serial.println(this->distance); //print the sensor value
+	  //Serial.println(this->distance); //print the sensor value
 }
 
 int Infrarouge::getDistance(){
 	return this->distance;
+}
+
+String Infrarouge::getDistanceToString(){
+	char buffer[5];
+	sprintf(buffer, "%d", this->getDistance());
+	return buffer;
 }

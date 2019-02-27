@@ -15,6 +15,7 @@ public:
 	virtual ~Infrarouge();
 
 	int getDistance();
+	String getDistanceToString();
 	void calculDistance();
 private:
 	int pin;                 // analog pin used to connect the sharp sensor

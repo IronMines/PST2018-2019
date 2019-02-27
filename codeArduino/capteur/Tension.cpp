@@ -9,7 +9,7 @@
 
 
 Tension::Tension(int _pin)
-: pin(_pin), Tension(0)
+: pin(_pin), tension(0)
 {
 	// TODO Auto-generated constructor stub
 	pinMode(this->pin, INPUT);
@@ -25,5 +25,5 @@ float Tension::getTension(){
 
 void Tension::calculTension(){
 	int val = analogRead(this->pin);
-	this->tension = ((float)val)*5f/1024f;
+	this->tension = 0.0f;//((float)val)*5f/1024f;
 }
