@@ -25,5 +25,5 @@ float Tension::getTension(){
 
 void Tension::calculTension(){
 	int val = analogRead(this->pin);
-	this->tension = 0.0f;//((float)val)*5f/1024f;
+	this->tension = ((float)val)*5.f/1024.f;
 }

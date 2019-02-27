@@ -3,7 +3,7 @@
 
 #include <Wire.h>
 #include "Infrarouge.h"
-//#include "Tension.h"
+#include "Tension.h"
 #include "Ultrason.h"
 
 
@@ -11,10 +11,7 @@
 #define SLAVE_ADDRESS 0x08
 
 //Variable pour la laison i2c
-bool orderReceveid=false;
 char dataReceveid;
-char actual = 0;
-char *buffer;
 int value;
 
 //analog pin
@@ -61,7 +58,7 @@ Ultrason UltrasonLateralGaucheAvant (trigPinUltrasonLateralGaucheAvant, echoPinU
 Ultrason UltrasonLateralGaucheArriere (trigPinUltrasonLateralGaucheArriere, echoPinUltrasonLateralGaucheArriere);
 Ultrason UltrasonArriere (trigPinUltrasonArriere, echoPinUltrasonArriere );
 //
-//Tension tension(pinTension);
+Tension tension(pinTension);
 
 
 void setup() {
@@ -87,16 +84,6 @@ void loop() {
 	UltrasonLateralGaucheAvant.calculDistance();
 	UltrasonLateralGaucheArriere.calculDistance();
 	UltrasonArriere.calculDistance();
-//
-//	tension.calculTension();
-
-//	Serial.print("distance Ultrason : ");
-//	String str = UltrasonAvantDroit.getDistanceToString();
-//	char buf[str.length()+1];
-//	str.toCharArray(buf, str.length()+1);
-//	Serial.println(buf);
-//	Serial.print("distance Infrarouge : ");
-//	Serial.println(InfrarougeAvantDroit.getDistance());
 
 	delay(400);
 }
@@ -107,120 +94,89 @@ void receiveData(int byteCount) {
 	if(Wire.available())
 		dataReceveid = Wire.read();
 
-	Serial.print("donnée :");
+	Serial.print("Adresse Reg :");
 	Serial.println((int)dataReceveid);
-	if((int)dataReceveid==5) {
-		//On recoit toujours 5 octets s'il s'agit bien d'un ordre
-		Serial.println("donnée recu");
-		actual = 0;
-		if (orderReceveid){
-			//si on a recu un ordre
-			free(buffer);
-		}
-		orderReceveid=true;
-		buffer = (char *)calloc(6, sizeof(char));
+	if((int)dataReceveid==0x10)
+	{
+		value = UltrasonAvantDroit.getDistance();
 	}
+	else if((int)dataReceveid==0x11)
+	{
+		value = UltrasonAvantGauche.getDistance();
+	}
+	else if((int)dataReceveid==0x12)
+	{
+		value = UltrasonLateralDroiteAvant.getDistance();
+	}
+	else if((int)dataReceveid==0x13)
+	{
+		value = UltrasonLateralDroiteArriere.getDistance();
+	}
+	else if((int)dataReceveid==0x14)
+	{
+		value = UltrasonLateralGaucheAvant.getDistance();
+	}
+	else if((int)dataReceveid==0x15)
+	{
+		value = UltrasonLateralGaucheArriere.getDistance();
+	}
+	else if((int)dataReceveid==0x16)
+	{
+		value = UltrasonArriere.getDistance();
+	}
+
+	/*
+	 * Capteurs Infrarouges
+	 */
+
+	else if((int)dataReceveid==0x20)
+	{
+		value = InfrarougeAvantDroit.getDistance();
+	}
+	else if((int)dataReceveid==0x21)
+	{
+		value = InfrarougeAvantGauche.getDistance();
+	}
+	else if((int)dataReceveid==0x22)
+	{
+		value = InfrarougeLateralDroiteAvant.getDistance();
+	}
+	else if((int)dataReceveid==0x23)
+	{
+		value = InfrarougeLateralDroiteArriere.getDistance();
+	}
+	else if((int)dataReceveid==0x24)
+	{
+		value = InfrarougeLateralGaucheAvant.getDistance();
+	}
+	else if((int)dataReceveid==0x25)
+	{
+		value = InfrarougeLateralGaucheArriere.getDistance();
+	}
+	else if((int)dataReceveid==0x26)
+	{
+		value = InfrarougeArriere.getDistance();
+	}
+
+	/*
+	 * Capteur de tension pour la batterie :
+	 */
+
+	else if((int)dataReceveid==0x30)
+	{
+		value = 2019;
+	}
+
 	else
 	{
-		if(orderReceveid){
-			buffer[actual] = dataReceveid;
-			actual ++;
-		}
-	}
-
-	if(orderReceveid && actual == 5){
-		//L'ordre est recu
-		orderReceveid=false;
-		Serial.print("buffer : ");
-		Serial.println(buffer);
-		/*
-		 * Capteurs Ultrasons
-		 */
-		if(strcmp(buffer, "UAvDr")==0)
-		{
-			value = UltrasonAvantDroit.getDistance();
-		}
-		else if(strcmp(buffer, "UAvGa")==0)
-		{
-			value = UltrasonAvantGauche.getDistance();
-		}
-		else if(strcmp(buffer, "ULDAv")==0)
-		{
-			value = UltrasonLateralDroiteAvant.getDistance();
-		}
-		else if(strcmp(buffer, "ULDAr")==0)
-		{
-			value = UltrasonLateralDroiteArriere.getDistance();
-		}
-		else if(strcmp(buffer, "ULGAv")==0)
-		{
-			value = UltrasonLateralGaucheAvant.getDistance();
-		}
-		else if(strcmp(buffer, "ULGAr")==0)
-		{
-			value = UltrasonLateralGaucheArriere.getDistance();
-		}
-		else if(strcmp(buffer, "UArCe")==0)
-		{
-			value = UltrasonArriere.getDistance();
-		}
-
-		/*
-		 * Capteurs Infrarouges
-		 */
-
-		else if(strcmp(buffer, "IAvDr")==0)
-		{
-			value = InfrarougeAvantDroit.getDistance();
-		}
-		else if(strcmp(buffer, "IAvGa")==0)
-		{
-			value = InfrarougeAvantGauche.getDistance();
-		}
-		else if(strcmp(buffer, "ILDAv")==0)
-		{
-			value = InfrarougeLateralDroiteAvant.getDistance();
-		}
-		else if(strcmp(buffer, "ILDAr")==0)
-		{
-			value = InfrarougeLateralDroiteArriere.getDistance();
-		}
-		else if(strcmp(buffer, "ILGAv")==0)
-		{
-			value = InfrarougeLateralGaucheAvant.getDistance();
-		}
-		else if(strcmp(buffer, "ILGAr")==0)
-		{
-			value = InfrarougeLateralGaucheArriere.getDistance();
-		}
-		else if(strcmp(buffer, "IArCe")==0)
-		{
-			value = InfrarougeArriere.getDistance();
-		}
-
-		/*
-		 * Capteur de tension pour la batterie :
-		 */
-
-		else if(strcmp(buffer, "BaLvl")==0)
-		{
-			value = 2019;
-		}
-
-		else
-		{
-			//pas compris
-		}
-		Serial.print("valeur : ");
-		Serial.println(value);
-		free(buffer);
+		//pas compris
 	}
 }
 
 void requestEvent(){
 	Serial.println("request");
 	int val1,val2;
-	if (value>9999){
+	if (value>9999 || value == 0){
 		//valeur trop grande
 		val1=255;
 		val2=255;
